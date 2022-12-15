@@ -19,14 +19,14 @@ public class AccountController {
     AccountService accountService;
     @Autowired
     Mapper mapper;
-    @PostMapping("/account")
+    @PostMapping(value = "/accountAdd", consumes = {"*/*"})
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     ResponseEntity<Account> addAccount(@Valid @RequestBody AccountDTO accountDTO) {
 
+
         Account account = mapper.toAccount(accountDTO);
         accountService.saveOrUpdate(account);
-
         return ResponseEntity.ok(account);
     }
    //standard exception handling

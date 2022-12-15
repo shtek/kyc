@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class Customer {
     private @Id @GeneratedValue  Long id;
-    @NotBlank(message = "forename is mandatory")
+    @NotNull(message = "forename is mandatory")
     private String forename;
-    @NotBlank(message = "surname is mandatory")
+    @NotNull(message = "surname is mandatory")
     private String surname;
-    @NotBlank(message = "data of birth is mandatory")
+    @NotNull(message = "data of birth is mandatory")
     private Date dateOfBirth;
-    @OneToMany(mappedBy="customer")
+   @OneToMany(mappedBy="customer")
     private Set<Account> accounts;
 }
