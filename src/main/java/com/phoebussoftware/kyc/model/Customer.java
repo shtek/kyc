@@ -3,6 +3,7 @@ package com.phoebussoftware.kyc.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
@@ -24,6 +25,6 @@ public class Customer {
     private String surname;
     @NotBlank(message = "data of birth is mandatory")
     private Date dateOfBirth;
-
+    @OneToMany(mappedBy="customer")
     private Set<Account> accounts;
 }

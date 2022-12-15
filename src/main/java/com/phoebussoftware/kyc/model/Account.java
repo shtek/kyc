@@ -3,6 +3,7 @@ package com.phoebussoftware.kyc.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Account {
     private @Id @GeneratedValue Long id;
     @NotBlank(message = "account number is mandatory")
     private int accountNumber;
+    @ManyToOne
     private Customer customer;
     public Account(int accountNumber, Customer customer){
         this.accountNumber = accountNumber;
