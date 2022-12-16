@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     @Autowired
     AccountRepository repository;
-    public void saveOrUpdate(Account account) {
+
+    public void save(Account account) {
         repository.save(account);
     }
 

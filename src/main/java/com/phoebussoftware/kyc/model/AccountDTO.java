@@ -1,6 +1,7 @@
 package com.phoebussoftware.kyc.model;
 
 import com.phoebussoftware.kyc.model.Customer;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AccountDTO {
-    private int accountNumber;
+
+    private Integer accountNumber;
     private Customer customer;
 }
