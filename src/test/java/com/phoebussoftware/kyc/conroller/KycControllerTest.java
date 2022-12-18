@@ -7,6 +7,7 @@ import com.phoebussoftware.kyc.model.AccountDTO;
 import com.phoebussoftware.kyc.model.Customer;
 import com.phoebussoftware.kyc.model.CustomerDTO;
 import com.phoebussoftware.kyc.web.Mapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,10 +25,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @ExtendWith(MockitoExtension.class)
 class KycControllerTest {
     @InjectMocks
@@ -52,7 +54,6 @@ class KycControllerTest {
         //continue for surname, accounts etc
         when(mapper.toCustomer(any(CustomerDTO.class))).thenReturn(customer);
 
-       // when(customerRepository.save(any(Customer.class))).thenReturn(customerSaved);
 
         doAnswer(new Answer() {
             public Object answer(InvocationOnMock invocation) {
@@ -106,7 +107,33 @@ class KycControllerTest {
         assertEquals(1L,responseEntity.getBody().getId());
         assertEquals(1,responseEntity.getBody().getAccountNumber());
 
+    }
+    @Test
+    void testUpdateCustomerAccountCustomerIsNull(){
+        assertNull(kycController.updateCustomerAccount(null, new Account()));
+
+    }
+
+    @Test
+    void testUpdateCustomerAccountCustomerIsNotNull(){
+        Customer customer = new Customer();
+        Account account = new Account();
+        account.setId(1L);
+        Account account2 = new Account();
+        account.setId(2L);
+
+        customer.setId(1L);
+        Assertions.assertNull(customer.getAccounts());
+        kycController.updateCustomerAccount(customer,account);
+        assertNotNull(customer);
+        assertEquals(1,customer.getAccounts().size());
+        kycController.updateCustomerAccount(customer,account2);
+        assertEquals(2,customer.getAccounts().size());
+        assertTrue(customer.getAccounts().contains(account));
 
 
     }
+
+
+
 }
