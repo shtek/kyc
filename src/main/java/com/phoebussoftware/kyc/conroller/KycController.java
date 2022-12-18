@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 @RestController
@@ -28,19 +29,24 @@ public class KycController {
     @PostMapping(value = "/addAccount", consumes = {"*/*"})
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    /*
-    TODO: I am assuming that customer exist , what shall happen if customer does not exist?
-     */
     ResponseEntity<Account> addAccount(@Valid @RequestBody AccountDTO accountDTO) {
-        Long id =  mapper.toCustomer(accountDTO).getId();
-        Customer customer = customerRepository.findById(id).orElse(null);
+
+        Customer customer = mapper.toCustomer(accountDTO);
         Account account = mapper.toAccount(accountDTO);
-        account.setCustomer(customer);
-        accountRepository.save(account);
-        customer.getAccounts().add(account);
-        customerRepository.save(customer);
+        account = accountRepository.save(account);
+        updateCustomerAccount(customer,account);
 
         return ResponseEntity.ok(account);
+    }
+    protected Customer updateCustomerAccount(Customer customer, Account account){
+        if (customer != null)
+        {
+            if (customer.getAccounts() == null)
+                customer.setAccounts(new HashSet<>());
+            customer.getAccounts().add(account);
+            customerRepository.save(customer);
+        }
+        return customer;
     }
 
     @PostMapping(value = "/addCustomer", consumes = {"*/*"})
