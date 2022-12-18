@@ -1,5 +1,6 @@
-package com.phoebussoftware.kyc.model;
+package com.phoebussoftware.kyc.DAO;
 
+import com.phoebussoftware.kyc.model.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

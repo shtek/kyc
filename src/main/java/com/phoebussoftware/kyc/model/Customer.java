@@ -1,5 +1,6 @@
 package com.phoebussoftware.kyc.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -36,6 +37,7 @@ public class Customer {
     @NotNull(message = "data of birth is mandatory")
     private Date dateOfBirth;
     @OneToMany(mappedBy="customer")
+    @JsonManagedReference
     private Set<Account> accounts;
 
     public Customer(Customer customer) {

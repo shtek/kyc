@@ -1,5 +1,6 @@
 package com.phoebussoftware.kyc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class Account {
     @NotNull(message = "account number is mandatory")
     private Integer accountNumber;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Customer customer;
    public Account(int accountNumber, Customer customer){
         this.accountNumber = accountNumber;
